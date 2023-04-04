@@ -41,15 +41,26 @@ router.get('/error', (req, res) => {
   res.render('errorUser')
 })
 
-router.get('/succes', (req, res) => {
+router.get('/successUser', (req, res) => {
   res.render('successUser')
 })
 
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/error',
-  successRedirect: '/success'
+  successRedirect: '/successUser'
+}), (req, res) => {
   
-}))
+  const {email} = req.body
+  console.log(email);
+  req.login(req.user, err => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error al iniciar sesión' });
+    } else {
+      res.redirect('/successUser');
+    }
+  });
+});
 
 export default router
 

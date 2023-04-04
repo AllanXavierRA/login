@@ -33,7 +33,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(localStrategy);
+passport.use('local', localStrategy);
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
